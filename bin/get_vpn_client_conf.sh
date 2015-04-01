@@ -6,7 +6,7 @@ VPN_PATH=/etc/openvpn
 
 # Extract remote nodes
 VPN_SERVERS="$1"
-if [ "${VPN_SERVERS}" == "**ChangeMe**" ]; then
+if [ "${VPN_SERVERS}" == "**ChangeMe**" ] || [ -z ${VPN_SERVERS} ]; then
    echo "ERROR: You did not specify VPN Servers to connect to, please enter VPN Servers as an argument."
    echo "You may specify more than one server separated by a comma, for example: $0 X.X.X.X:1194,Y.Y.Y.Y:1194"
    echo "Exiting..."
