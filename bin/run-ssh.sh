@@ -10,6 +10,3 @@ if [ "${VPN_PASSWORD}" == "**ChangeMe**" ]; then
    exit 1
 fi
 echo "root:${VPN_PASSWORD}" | chpasswd
-
-# Start SSHD
-/usr/sbin/sshd -D

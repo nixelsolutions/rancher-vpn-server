@@ -59,6 +59,3 @@ duplicate-cn
 
 push "route $RANCHER_NETWORK_CIDR $RANCHER_NETWORK_MASK"
 EOF
-
-# Start openvpn server
-openvpn --config $OPENVPN_PATH/server.conf
