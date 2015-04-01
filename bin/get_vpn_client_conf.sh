@@ -2,8 +2,6 @@
 
 set -e
 
-source environment.sh
-
 # Extract remote nodes
 VPN_SERVERS="$1"
 if [ "${VPN_SERVERS}" == "**ChangeMe**" ]; then
@@ -15,12 +13,12 @@ fi
 OVPN_SERVERS=`echo ${VPN_SERVERS} | sed "s/^/remote /g" | sed "s/,$//g" | sed "s/,/\nremote /g" | sed "s/:/ /g"`
 
 # Extract ca.crt
-CA_CRT=`cat $OPENVPN_PATH/easy-rsa/keys/ca.crt`
-CLIENT_CRT=`cat $OPENVPN_PATH/easy-rsa/keys/RancherVPNClient.crt`
-CLIENT_KEY=`cat $OPENVPN_PATH/easy-rsa/keys/RancherVPNClient.key`
-TA_KEY=`cat $OPENVPN_PATH/easy-rsa/keys/ta.key`
+CA_CRT=`cat $VPN_PATH/easy-rsa/keys/ca.crt`
+CLIENT_CRT=`cat $VPN_PATH/easy-rsa/keys/RancherVPNClient.crt`
+CLIENT_KEY=`cat $VPN_PATH/easy-rsa/keys/RancherVPNClient.key`
+TA_KEY=`cat $VPN_PATH/easy-rsa/keys/ta.key`
 
-cat > $OPENVPN_PATH/RancherVPNClient.ovpn <<EOF
+cat > $VPN_PATH/RancherVPNClient.ovpn <<EOF
 $OVPN_SERVERS
 remote-random
 client
@@ -58,5 +56,5 @@ $TA_KEY
 </tls-auth>
 EOF
 
-chmod 600 $OPENVPN_PATH/RancherVPNClient.ovpn
-cat $OPENVPN_PATH/RancherVPNClient.ovpn
+chmod 600 $VPN_PATH/RancherVPNClient.ovpn
+cat $VPN_PATH/RancherVPNClient.ovpn
