@@ -17,8 +17,8 @@ ENV DEBUG 0
 
 VOLUME ["/etc/openvpn"]
 
-EXPOSE 2222/tcp
-EXPOSE 1194/udp
+EXPOSE 2222
+EXPOSE 1194
 
 WORKDIR /etc/openvpn
 

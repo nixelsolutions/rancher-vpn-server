@@ -25,7 +25,7 @@ $OVPN_SERVERS
 remote-random
 client
 dev tun
-proto udp
+proto tcp
 resolv-retry infinite
 nobind
 comp-lzo
