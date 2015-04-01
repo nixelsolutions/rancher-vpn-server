@@ -3,9 +3,9 @@ FROM ubuntu:14.04
 MAINTAINER Manel Martinez <manel@nixelsolutions.com>
 
 RUN apt-get update && \
-    apt-get install -y openssh-server openvpn easy-rsa iptables rsync ipcalc sshpass
+    apt-get install -y openssh-server openvpn easy-rsa iptables rsync ipcalc sshpass supervisor
 
-RUN mkdir -p /var/run/sshd
+RUN mkdir -p /var/run/sshd /var/log/supervisor
 RUN perl -p -i -e "s/^Port .*/Port 2222/g" /etc/ssh/sshd_config
 RUN perl -p -i -e "s/#?PasswordAuthentication .*/PasswordAuthentication yes/g" /etc/ssh/sshd_config
 RUN perl -p -i -e "s/#?PermitRootLogin .*/PermitRootLogin yes/g" /etc/ssh/sshd_config
