@@ -5,8 +5,13 @@ MAINTAINER Manel Martinez <manel@nixelsolutions.com>
 RUN apt-get update && \
     apt-get install -y openssh-server openvpn easy-rsa iptables rsync ipcalc sshpass
 
-ENV VPN_TYPE **ChangeMe**
-ENV VPN_SERVERS **ChangeMe**
+RUN mkdir -p /var/run/sshd
+RUN perl -p -i -e "s/^Port .*/Port 2222/g" /etc/ssh/sshd_config
+RUN perl -p -i -e "s/#?PasswordAuthentication .*/PasswordAuthentication yes/g" /etc/ssh/sshd_config
+RUN perl -p -i -e "s/#?PermitRootLogin .*/PermitRootLogin yes/g" /etc/ssh/sshd_config
+RUN grep ClientAliveInterval /etc/ssh/sshd_config >/dev/null 2>&1 || echo "ClientAliveInterval 60" >> /etc/ssh/sshd_config
+
+ENV VPN_PATH /etc/openvpn
 ENV VPN_PASSWORD **ChangeMe**
 ENV DEBUG 0
 
@@ -21,4 +26,6 @@ RUN mkdir -p /usr/local/bin
 ADD ./bin /usr/local/bin
 RUN chmod +x /usr/local/bin/*.sh
 
-CMD ["run.sh"]
+CMD ["run-ssh.sh"]
+CMD ["run-vpn.sh"]
+CMD ["/bin/bash"]

@@ -4,19 +4,19 @@
 
 set -e
 
-if [ ! -d $OPENVPN_PATH/easy-rsa ]; then
+if [ ! -d $VPN_PATH/easy-rsa ]; then
    # Copy easy-rsa tools to /etc/openvpn
-   rsync -avz /usr/share/easy-rsa $OPENVPN_PATH/
+   rsync -avz /usr/share/easy-rsa $VPN_PATH/
 
    # Configure easy-rsa vars file
-   perl -p -i -e "s/export KEY_COUNTRY=.*/export KEY_COUNTRY=\"CA\"/g" $OPENVPN_PATH/easy-rsa/vars
-   perl -p -i -e "s/export KEY_PROVINCE=.*/export KEY_PROVINCE=\"BARCELONA\"/g" $OPENVPN_PATH/easy-rsa/vars
-   perl -p -i -e "s/export KEY_CITY=.*/export KEY_CITY=\"CASTELLDEFELS\"/g" $OPENVPN_PATH/easy-rsa/vars
-   perl -p -i -e "s/export KEY_ORG=.*/export KEY_ORG=\"NIXEL\"/g" $OPENVPN_PATH/easy-rsa/vars
-   perl -p -i -e "s/export KEY_EMAIL=.*/export KEY_EMAIL=\"manel\@nixelsolutions.com\"/g" $OPENVPN_PATH/easy-rsa/vars
-   perl -p -i -e "s/export KEY_OU=.*/export KEY_OU=\"NIXEL\"/g" $OPENVPN_PATH/easy-rsa/vars
+   perl -p -i -e "s/export KEY_COUNTRY=.*/export KEY_COUNTRY=\"CA\"/g" $VPN_PATH/easy-rsa/vars
+   perl -p -i -e "s/export KEY_PROVINCE=.*/export KEY_PROVINCE=\"BARCELONA\"/g" $VPN_PATH/easy-rsa/vars
+   perl -p -i -e "s/export KEY_CITY=.*/export KEY_CITY=\"CASTELLDEFELS\"/g" $VPN_PATH/easy-rsa/vars
+   perl -p -i -e "s/export KEY_ORG=.*/export KEY_ORG=\"NIXEL\"/g" $VPN_PATH/easy-rsa/vars
+   perl -p -i -e "s/export KEY_EMAIL=.*/export KEY_EMAIL=\"manel\@nixelsolutions.com\"/g" $VPN_PATH/easy-rsa/vars
+   perl -p -i -e "s/export KEY_OU=.*/export KEY_OU=\"NIXEL\"/g" $VPN_PATH/easy-rsa/vars
 
-   pushd $OPENVPN_PATH/easy-rsa
+   pushd $VPN_PATH/easy-rsa
    . ./vars
    ./clean-all
    ./build-ca --batch
@@ -32,7 +32,7 @@ RANCHER_NETWORK_CIDR=`ip addr show dev eth0 | grep inet | grep 10.42 | awk '{pri
 RANCHER_NETWORK_MASK=`ip addr show dev eth0 | grep inet | grep 10.42 | awk '{print $2}' | xargs -i ipcalc -n {} | grep Netmask | awk '{print $2}'`
 
 # Create OpenVPN server config
-cat > $OPENVPN_PATH/server.conf <<EOF
+cat > $VPN_PATH/server.conf <<EOF
 port 1194
 proto udp
 dev tun
@@ -42,7 +42,7 @@ comp-lzo
 user nobody
 group nogroup
 
-log-append $OPENVPN_PATH/openvpn.log
+log-append /var/log/openvpn.log
 verb 3
 
 persist-key
