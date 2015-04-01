@@ -2,6 +2,8 @@
 
 set -e
 
+VPN_PATH=/etc/openvpn
+
 # Extract remote nodes
 VPN_SERVERS="$1"
 if [ "${VPN_SERVERS}" == "**ChangeMe**" ]; then
