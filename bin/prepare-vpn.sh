@@ -59,3 +59,8 @@ duplicate-cn
 
 push "route $RANCHER_NETWORK_CIDR $RANCHER_NETWORK_MASK"
 EOF
+
+# Enable tcp forwarding and add iptables MASQUERADE rule
+echo 1 > /proc/sys/net/ipv4/ip_forward
+iptables -t nat -F
+iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -j MASQUERADE
