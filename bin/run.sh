@@ -14,7 +14,7 @@ prepare-ssh.sh
 prepare-vpn.sh
 
 echo "==========================================="
-echo "If you are using nixel/rancher-vpn-client docker image you must run your container with the following environment variables:"
+echo "If you are using nixel/rancher-vpn-client docker image you must run rancher-vpn-client container with the following environment variables:"
 echo "-e VPN_SERVERS=$my_public_ip:1194 -e VPN_PASSWORD=${VPN_PASSWORD}"
 echo "==========================================="
 echo "If you are using another OpenVPN client (for example for mobile devices) you can get the VPN client configuration executing this command from your PC:"
