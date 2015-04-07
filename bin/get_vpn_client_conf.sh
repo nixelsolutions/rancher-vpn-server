@@ -30,10 +30,10 @@ resolv-retry infinite
 nobind
 comp-lzo
 
-user nobody
-group nogroup 
+;user nobody
+;group nogroup 
 
-log-append  /var/log/openvpn.log
+;log-append  /var/log/openvpn.log
 verb 3
 
 persist-key
