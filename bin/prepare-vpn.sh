@@ -28,8 +28,8 @@ if [ ! -d $VPN_PATH/easy-rsa ]; then
 fi
 
 # Update openvpn route
-RANCHER_NETWORK_CIDR=`ip addr show dev eth0 | grep inet | grep 10.42 | awk '{print $2}' | xargs -i ipcalc -n {} | grep Network | awk '{print $2}' | awk -F/ '{print $1}'`
-RANCHER_NETWORK_MASK=`ip addr show dev eth0 | grep inet | grep 10.42 | awk '{print $2}' | xargs -i ipcalc -n {} | grep Netmask | awk '{print $2}'`
+#RANCHER_NETWORK_CIDR=`ip addr show dev eth0 | grep inet | grep 10.42 | awk '{print $2}' | xargs -i ipcalc -n {} | grep Network | awk '{print $2}' | awk -F/ '{print $1}'`
+#RANCHER_NETWORK_MASK=`ip addr show dev eth0 | grep inet | grep 10.42 | awk '{print $2}' | xargs -i ipcalc -n {} | grep Netmask | awk '{print $2}'`
 
 # Create OpenVPN server config
 cat > $VPN_PATH/server.conf <<EOF
@@ -57,7 +57,7 @@ tls-auth easy-rsa/keys/ta.key 0
 server 10.8.0.0 255.255.255.0
 duplicate-cn
 
-push "route $RANCHER_NETWORK_CIDR $RANCHER_NETWORK_MASK"
+push "route ${ROUTED_NETWORK_CIDR} ${ROUTED_NETWORK_MASK}"
 EOF
 
 # Enable tcp forwarding and add iptables MASQUERADE rule
